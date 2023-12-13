@@ -1,59 +1,29 @@
+// --- Day 1: Not Quite Lisp ---
+
 import { readFileSync } from "node:fs";
 
-const lines = readFileSync("day1.txt", { encoding: "utf-8"})
+const input = "day1Input.txt";
 
-let data = lines.split("\n");
+const instructions = readFileSync(input, { encoding: "utf-8" }).split("");
 
-//Parte 1
+let floor = 0;
 
-//Solución Alterna
+instructions.forEach((instruction) => {
+  floor += instruction === "(" ? 1 : -1;
+});
 
-/*let dataList = [...lines]
+console.log(`The instructions take Santa to the floor: ${floor}`); // Answer Part 1
 
-console.log(dataList)
+// Part 2
 
-let directionValue=0
+floor = 0;
 
-let dataValuesList=dataList.map(function(direction) {
-    if (direction=="(") {
-       directionValue=1
-    }
+const positionToEnterTheBasement =
+  instructions.findIndex((instruction) => {
+    floor += instruction === "(" ? 1 : -1;
+    return floor === -1;
+  }) + 1;
 
-    else {
-        directionValue=-1
-    }
-
-    return directionValue
-})
-
-console.log(dataValuesList)
-
-let level=dataValuesList.reduce(function(a,b) {
-    return a+b
-})
-
-console.log(level)*/
-
-console.log(lines)
-
-let level=0
-
-let counter=0
-
-for (let direction of lines) {
-    if (direction=="(") {
-        level++
-        counter++
-    }
-
-    else {
-        level--
-        counter++
-    }
-
-    if (level==-1) {
-        console.log(counter)
-    }
-}
-
-console.log("floor: "+level)
+console.log(
+  `The position of the instruction to enter the basement is: ${positionToEnterTheBasement}`
+); // Answer Part 2
