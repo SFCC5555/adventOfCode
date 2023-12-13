@@ -1,16 +1,35 @@
-// --- Day 1: No Time for a Taxicab ---
-
 import { readFileSync } from "node:fs";
 
-const input = "day1Input.txt";
+const input: string = "day1Input.txt";
 
-const instructions = readFileSync(input, { encoding: "utf-8" }).split(", ");
+const instructions: string[] = readFileSync(input, { encoding: "utf-8" }).split(
+  ", "
+);
 
-let coordinates = { x: 0, y: 0 };
+interface Coordinates {
+  x: number;
+  y: number;
+}
 
-let faceDirection = "N";
+let coordinates: Coordinates = { x: 0, y: 0 };
 
-const mechanism = {
+type Direction = "N" | "E" | "S" | "W";
+type Sense = "R" | "L";
+
+let faceDirection: Direction = "N";
+
+interface MechanismDetail {
+  newDirection: Direction;
+  value: number;
+}
+
+interface Mechanism {
+  axis: "x" | "y";
+  R: MechanismDetail;
+  L: MechanismDetail;
+}
+
+const mechanism: Record<Direction, Mechanism> = {
   N: {
     axis: "x",
     R: { newDirection: "E", value: 1 },
@@ -33,9 +52,9 @@ const mechanism = {
   },
 };
 
-instructions.forEach((instruction) => {
-  const sense = instruction[0];
-  const steps = parseInt(instruction.slice(1));
+instructions.forEach((instruction: string): void => {
+  const sense: Sense = instruction[0] as Sense;
+  const steps: number = parseInt(instruction.slice(1), 10);
   if (!isNaN(steps) && (sense === "R" || sense === "L")) {
     coordinates[mechanism[faceDirection].axis] +=
       steps * mechanism[faceDirection][sense].value;
@@ -43,7 +62,7 @@ instructions.forEach((instruction) => {
   }
 });
 
-const blocksAway = Math.abs(coordinates.x) + Math.abs(coordinates.y);
+const blocksAway: number = Math.abs(coordinates.x) + Math.abs(coordinates.y);
 
 console.log(
   `The coordinates of the destination are { x: ${coordinates.x}, y: ${coordinates.y}} and they are ${blocksAway} blocks away.`
