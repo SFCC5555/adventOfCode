@@ -1,56 +1,41 @@
-import {readFileSync} from "node:fs"
+// --- Day 1: Inverse Captcha ---
 
-const lines = readFileSync("day1.txt",{encoding:"utf-8"})
+import { readFileSync } from "node:fs";
 
+const input = "day1Input.txt";
 
-//Part 1
+let lines = readFileSync(input, { encoding: "utf-8" });
 
-function part1() {
+lines += lines[0];
 
-    let sum=0
+let sum = 0;
 
-    for (let i=0;i<lines.length;i++) {
-    
-        if (i==lines.length-1) {
-            if (lines[i]==lines[0]) {
-                sum+=parseInt(lines[i])
-            }
-        }
-        
-        else if (lines[i]==lines[i+1]) {
-            sum+=parseInt(lines[i])
-        }
-    }
-    
-    console.log(`solution: ${sum}`)
-
+for (let i = 0; i < lines.length - 1; i++) {
+  if (lines[i] === lines[i + 1]) {
+    sum += parseInt(lines[i]);
+  }
 }
 
-part1()
+console.log(`The solution of the captcha is: ${sum}`); // Answer Part 1
 
 //Part 2
 
-function part2() {
+// function part2() {
+//   let sum = 0;
 
-    let sum=0
+//   let steps = lines.length / 2;
 
-    let steps=lines.length/2
+//   for (let i = 0; i < lines.length; i++) {
+//     if (i >= steps) {
+//       if (lines[i] == lines[Math.abs(steps - i)]) {
+//         sum += parseInt(lines[i]);
+//       }
+//     } else if (lines[i] == lines[i + steps]) {
+//       sum += parseInt(lines[i]);
+//     }
+//   }
 
-    for (let i=0;i<lines.length;i++) {
-    
-        if (i>=steps) {
-            if (lines[i]==lines[Math.abs(steps-i)]) {
-                sum+=parseInt(lines[i])
-            }
-        }
-        
-        else if (lines[i]==lines[i+steps]) {
-            sum+=parseInt(lines[i])
-        }
-    }
-    
-    console.log(`solution: ${sum}`)
+//   console.log(`solution: ${sum}`);
+// }
 
-}
-
-part2()
+// part2();
