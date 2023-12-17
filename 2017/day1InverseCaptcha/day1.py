@@ -5,11 +5,23 @@ input = "day1Input.txt"
 with open(input, "r", encoding="utf-8") as file:
     lines = file.read()
 
-lines += lines[0]
-sum = 0
 
-for i in range(0, len(lines) - 1):
-    if lines[i] == lines[i + 1]:
-        sum += int(lines[i])
+def captchaSolver(steps):
+    sequence = lines + lines[:steps]
 
-print(f"The solution of the captcha is: {sum}")  # Answer Part 1
+    sum = 0
+
+    for i in range(len(sequence) - steps):
+        if sequence[i] == sequence[i + steps]:
+            sum += int(sequence[i])
+
+    print(f"The solution of the captcha is: {sum}")
+
+
+captchaSolver(1)  # Answer Part 1
+
+# Part 2
+
+half = len(lines) // 2
+
+captchaSolver(half)  # Answer Part 2

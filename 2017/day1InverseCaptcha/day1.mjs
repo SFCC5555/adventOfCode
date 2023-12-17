@@ -6,36 +6,22 @@ const input = "day1Input.txt";
 
 let lines = readFileSync(input, { encoding: "utf-8" });
 
-lines += lines[0];
-
-let sum = 0;
-
-for (let i = 0; i < lines.length - 1; i++) {
-  if (lines[i] === lines[i + 1]) {
-    sum += parseInt(lines[i]);
+const captchaSolver = (steps) => {
+  const sequence = lines + lines.slice(0, steps);
+  let sum = 0;
+  for (let i = 0; i < sequence.length - steps; i++) {
+    if (sequence[i] === sequence[i + steps]) {
+      sum += parseInt(sequence[i]);
+    }
   }
-}
 
-console.log(`The solution of the captcha is: ${sum}`); // Answer Part 1
+  console.log(`The solution of the captcha is: ${sum}`);
+};
 
-//Part 2
+captchaSolver(1); // Answer Part 1
 
-// function part2() {
-//   let sum = 0;
+// Part 2
 
-//   let steps = lines.length / 2;
+const half = Math.floor(lines.length / 2);
 
-//   for (let i = 0; i < lines.length; i++) {
-//     if (i >= steps) {
-//       if (lines[i] == lines[Math.abs(steps - i)]) {
-//         sum += parseInt(lines[i]);
-//       }
-//     } else if (lines[i] == lines[i + steps]) {
-//       sum += parseInt(lines[i]);
-//     }
-//   }
-
-//   console.log(`solution: ${sum}`);
-// }
-
-// part2();
+captchaSolver(half); // Answer Part 2
