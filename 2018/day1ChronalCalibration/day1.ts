@@ -2,14 +2,16 @@
 
 import { readFileSync } from "node:fs";
 
-const input = "day1Input.txt";
+const input: string = "day1Input.txt";
 
-const sequenceOfChanges = readFileSync(input, { encoding: "utf-8" })
+const sequenceOfChanges: number[] = readFileSync(input, {
+  encoding: "utf-8",
+})
   .split("\n")
   .map((change) => parseInt(change));
 
-let frequency = sequenceOfChanges.reduce(
-  (current, change) => current + change,
+let frequency: number = sequenceOfChanges.reduce(
+  (current: number, change: number): number => current + change,
   0
 );
 
@@ -19,7 +21,7 @@ console.log(`The frequency after all of the changes is: ${frequency}`); // Answe
 
 frequency = 0;
 
-const frequencyRecord = new Set();
+const frequencyRecord: Set<number> = new Set();
 
 while (!frequencyRecord.has(frequency)) {
   for (let change of sequenceOfChanges) {
