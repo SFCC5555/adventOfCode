@@ -2,18 +2,18 @@
 
 import { readFileSync } from "node:fs";
 
-const input = "day1Input.txt";
+const input: string = "day1Input.txt";
 
-const expenseReport = readFileSync(input, { encoding: "utf-8" })
+const expenseReport: number[] = readFileSync(input, { encoding: "utf-8" })
   .split("\n")
   .map(Number);
 
 for (let i = 0; i < expenseReport.length; i++) {
-  const entrie = expenseReport[i];
+  const entrie: number = expenseReport[i];
 
-  const secondEntrie = 2020 - entrie;
+  const secondEntrie: number = 2020 - entrie;
 
-  const entriesSet = new Set([
+  const entriesSet: Set<number> = new Set([
     ...expenseReport.slice(0, i),
     ...expenseReport.slice(i + 1),
   ]);
