@@ -1,61 +1,27 @@
+// --- Day 2: I Was Told There Would Be No Math ---
+
 import { readFileSync } from "node:fs";
 
-const lines = readFileSync("day2.txt", { encoding: "utf-8"})
+const input = "day2Input.txt";
 
-let data = lines.split("\n");
+const presents = readFileSync(input, { encoding: "utf-8" }).split("\n");
 
-console.log(data)
+let sumTotalAreas = presents
+  .map((dimensions) => {
+    const [l, w, h] = dimensions.split("x").map(Number);
 
-let sumTotalAreas=0
+    const area1 = l * w;
+    const area2 = l * h;
+    const area3 = w * h;
 
-let sumTotalRibbon=0
+    const minArea = Math.min(area1, area2, area3);
 
-for (let dimentionsData of data) {
-    let dimentions=dimentionsData.split("x")
-    console.log(dimentions)
+    const totalArea = 2 * area1 + 2 * area2 + 2 * area3 + minArea;
 
-    let l=dimentions[0]
-    let w=dimentions[1]
-    let h=dimentions[2]
+    return totalArea;
+  })
+  .reduce((total, area) => total + area, 0);
 
-    let area1=2*l*w
-    let area2=2*w*h
-    let area3=2*h*l
-
-    let areas=[area1,area2,area3]
-
-    console.log(areas)
-
-    let smallArea=Math.min(...areas)/2
-
-    console.log(smallArea)
-
-    let totalArea=area1+area2+area3+smallArea
-
-    console.log(totalArea)
-
-    sumTotalAreas+=totalArea
-
-    //Part 2
-
-    let perimeter1=2*l+2*w
-    let perimeter2=2*w+2*h
-    let perimeter3=2*h+2*l
-
-    let perimeters=[perimeter1,perimeter2,perimeter3]
-
-    console.log(perimeters)
-
-    let smallPerimeter=Math.min(...perimeters)
-
-    let perfectBow=l*w*h
-
-    let totalRibbon=smallPerimeter+perfectBow
-
-    sumTotalRibbon+=totalRibbon
-
-}
-
-console.log(sumTotalAreas)
-
-console.log(sumTotalRibbon)
+console.log(
+  `The total square feet of wrapping paper they should order is: ${sumTotalAreas}`
+); // Answer Part 1
