@@ -8,8 +8,8 @@ const presents: string[] = readFileSync(input, { encoding: "utf-8" }).split(
   "\n"
 );
 
-let sumTotalAreas: number = presents
-  .map((dimensions: string): number => {
+const sumTotalAreas: number = presents.reduce(
+  (total: number, dimensions: string): number => {
     const [l, w, h]: number[] = dimensions.split("x").map(Number);
 
     const area1: number = l * w;
@@ -20,10 +20,29 @@ let sumTotalAreas: number = presents
 
     const totalArea: number = 2 * area1 + 2 * area2 + 2 * area3 + minArea;
 
-    return totalArea;
-  })
-  .reduce((total: number, area: number): number => total + area, 0);
+    return total + totalArea;
+  },
+  0
+);
 
 console.log(
   `The total square feet of wrapping paper they should order is: ${sumTotalAreas}`
 ); // Answer Part 1
+
+// Part 2
+
+const sumTotalRibbon: number = presents.reduce(
+  (total: number, dimensions: string): number => {
+    const [l, w, h]: number[] = dimensions
+      .split("x")
+      .map(Number)
+      .sort((a: number, b: number) => a - b);
+    const presentRibbon: number = 2 * l + 2 * w;
+    const bowRibbon: number = l * w * h;
+    const totalRibbon: number = presentRibbon + bowRibbon;
+    return total + totalRibbon;
+  },
+  0
+);
+
+console.log(`The total feet of ribbon they should order is: ${sumTotalRibbon}`); // Answer Part 2

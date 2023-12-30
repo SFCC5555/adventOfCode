@@ -24,3 +24,24 @@ sum_total_areas = sum(total_areas)
 print(
     f"The total square feet of wrapping paper they should order is: {sum_total_areas}"
 )  # Answer Part 1
+
+# Part 2
+
+total_ribbon_list = list()
+
+for dimensions in presents:
+    [l, w, h] = sorted(map(int, dimensions.split("x")))
+
+    present_ribbon = 2 * l + 2 * w
+
+    bow_ribbon = l * w * h
+
+    total_ribbon = present_ribbon + bow_ribbon
+
+    total_ribbon_list.append(total_ribbon)
+
+sum_total_ribbon = sum(total_ribbon_list)
+
+print(
+    f"The total feet of ribbon they should order is: {sum_total_ribbon}"
+)  # Answer Part 2
