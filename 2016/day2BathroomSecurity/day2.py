@@ -50,3 +50,43 @@ for instruction in instructions:
             break
 
 print(f"The bathroom code is: {code}")  # Answer Part 1
+
+# Part 2
+
+position = {"x": 0, "y": 2}
+
+code = ""
+
+buttons = {
+    "1": {"x": 2, "y": 4},
+    "2": {"x": 1, "y": 3},
+    "3": {"x": 2, "y": 3},
+    "4": {"x": 3, "y": 3},
+    "5": {"x": 0, "y": 2},
+    "6": {"x": 1, "y": 2},
+    "7": {"x": 2, "y": 2},
+    "8": {"x": 3, "y": 2},
+    "9": {"x": 4, "y": 2},
+    "A": {"x": 1, "y": 1},
+    "B": {"x": 2, "y": 1},
+    "C": {"x": 3, "y": 1},
+    "D": {"x": 2, "y": 0},
+}
+
+for instruction in instructions:
+    for move in instruction:
+        new_x_position = position["x"] + keypad_moves[move]["x"]
+        new_y_position = position["y"] + keypad_moves[move]["y"]
+        new_position = {"x": new_x_position, "y": new_y_position}
+
+        for button, button_position in buttons.items():
+            if button_position == new_position:
+                position = new_position
+                break
+
+    for button, button_position in buttons.items():
+        if button_position == position:
+            code += button
+            break
+
+print(f"The correct bathroom code is: {code}")  # Answer Part 2
