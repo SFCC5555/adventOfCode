@@ -1,81 +1,35 @@
-import {readFileSync} from "node:fs"
+// --- Day 2: Corruption Checksum ---
 
-const lines = readFileSync("day2.txt",{encoding:"utf-8"})
+import { readFileSync } from "node:fs";
 
-let data = lines.split("\n")
+const input = "day2Input.txt";
 
-let data2= data.map(function(i) {
-    
-    let u=i.replaceAll("\t"," ")
-    let x=u.split(" ")
+const spreadsheet = readFileSync(input, { encoding: "utf-8" })
+  .split("\n")
+  .map((row) => row.split(/\s+/).map(Number));
 
-    return x
-})
+const checksum = spreadsheet.reduce(
+  (sum, row) => sum + Math.max(...row) - Math.min(...row),
+  0
+);
 
-//console.log(data2)
+console.log(`The checksum for the spreadsheet is: ${checksum}`); // Answer part 1
 
-let data3= data2.map(function(z) {
-    let s=z.map(function(f) {
-        let c=parseInt(f)
-        return c
-    })
+// Part 2
 
-    return s
-})
-
-console.log(data3)
-
-let diferenceList = data3.map(function(numbers) {
-    
-    numbers.sort(function(a,b) {
-        return a-b
-    })
-
-    //console.log(numbers)
-
-    let diference = parseInt(numbers[numbers.length-1])- parseInt(numbers[0])
-
-    return diference
-
-    })
-
-console.log(diferenceList)
-
-let checkSum = diferenceList.reduce(function(a,b) {
-    return a+b
-})
-
-console.log(checkSum)
-
-console.log("Part 2 ***************************")
-
-let checkSum2=0
-
-for (let numberList of data3) {
-
-    let counter1=0
-
-    for (let number of numberList) {
-
-        counter1++
-        let counter2=0
-        for (let n of numberList) {
-            
-            counter2++
-            
-            if (counter1===counter2) {
-
-            }
-            else if (number%n===0) {
-                let divition=number/n
-
-                checkSum2+=divition
-
-                console.log(divition);
-            }
-        }
+const secondChecksum = spreadsheet.reduce((sum, row) => {
+  for (let index = 0; index < row.length; index++) {
+    const a = row[index];
+    const b = row.slice(index + 1).find((number) => {
+      return a % number === 0 || number % a === 0;
+    });
+    if (b) {
+      return sum + Math.max(a, b) / Math.min(a, b);
     }
+  }
+  return sum;
+}, 0);
 
-}
-
-console.log(checkSum2)
+console.log(
+  `The checksum for the division of the evenly divisible values of the spreadsheet is: ${secondChecksum}`
+); // Answer part 2
