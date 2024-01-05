@@ -1,144 +1,111 @@
-import {readFileSync} from "node:fs";
+// --- Day 2: Inventory Management System ---
 
-const lines = readFileSync("day2.txt",{encoding:"utf-8"});
+import { readFileSync } from "node:fs";
 
-let data = lines.split("\n");
+const input = "day2Input.txt";
 
-console.log(data);
+const likely_candidates = readFileSync(input, { encoding: "utf-8" }).split(
+  "\n"
+);
 
-let counter2 = 0;
+let twoTimes = 0;
 
-let counter3 = 0;
+let threeTimes = 0;
 
-let two = data.map(s=> {
+likely_candidates.forEach((candidate) => {
+  const letters = {};
+  for (let letter of candidate) {
+    letters[letter] = letter in letters ? letters[letter] + 1 : 1;
+  }
 
-    for (let l of s) {
+  twoTimes += new Set(Object.values(letters)).has(2) ? 1 : 0;
 
-        let i = new RegExp(l,"g");
-
-        let lList = s.match(i);
-
-        if (lList.length===2) {
-            
-            counter2++
-
-            break
-            
-        }
-
-    }
-
-    
+  threeTimes += new Set(Object.values(letters)).has(3) ? 1 : 0;
 });
 
-let three = data.map(s=> {
+const checksum = twoTimes * threeTimes;
 
-    for (let l of s) {
-
-        let i = new RegExp(l,"g");
-
-        let lList = s.match(i);
-
-        if (lList.length===3) {
-            
-            counter3++
-
-            break
-            
-        }
-
-    }
-
-    
-});
-
-
-
-console.log(counter2)
-console.log(counter3)
-
-
-console.log(counter2*counter3)
-
+console.log(
+  `The number of box IDs that contain a letter which appears exactly two times is: ${twoTimes}`
+);
+console.log(
+  `The number of box IDs that contain a letter which appears exactly three times is: ${threeTimes}`
+);
+console.log(`The checksum of the list of box IDs is: ${checksum}`); // Answer Part 1
 
 //Part 2
 
-let iD1
+// let iD1
 
-let iD2
+// let iD2
 
-let iD
+// let iD
 
-let x
+// let x
 
-data.map(s=>{
-    
-    let status = 1
+// data.map(s=>{
 
-    for (let string of data) {
+//     let status = 1
 
-        let count=0
+//     for (let string of data) {
 
-        let count2=0
+//         let count=0
 
-        if (s===string) {
+//         let count2=0
 
-        }
+//         if (s===string) {
 
-        else if (status === 1) {
+//         }
 
-            for (let l=0; l<string.length;l++) {
+//         else if (status === 1) {
 
-                if (s[l]===string[l]) {
-    
-                    count++
-    
-                }
+//             for (let l=0; l<string.length;l++) {
 
-                else {
-                    count2++
+//                 if (s[l]===string[l]) {
 
-                    x = l
+//                     count++
 
-                }
+//                 }
 
-                if (count2>1) {
-                    break
-                }
-    
-                if (count===string.length-1 && count2===1) {
-    
-                    iD1=s;
-    
-                    iD2=string;
+//                 else {
+//                     count2++
 
-                    iD=s.slice(0,x)+s.slice(x+1)
+//                     x = l
 
-                    status=0
+//                 }
 
-                    break
-    
-    
-                }
-    
-    
-    
-            }
+//                 if (count2>1) {
+//                     break
+//                 }
 
-        }
+//                 if (count===string.length-1 && count2===1) {
 
-        else {
-            
-            break
-        }
+//                     iD1=s;
 
+//                     iD2=string;
 
+//                     iD=s.slice(0,x)+s.slice(x+1)
 
-    } 
-});
+//                     status=0
 
-console.log(iD1);
+//                     break
 
-console.log(iD2);
+//                 }
 
-console.log(iD);
+//             }
+
+//         }
+
+//         else {
+
+//             break
+//         }
+
+//     }
+// });
+
+// console.log(iD1);
+
+// console.log(iD2);
+
+// console.log(iD);
