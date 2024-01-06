@@ -33,79 +33,32 @@ console.log(
 );
 console.log(`The checksum of the list of box IDs is: ${checksum}`); // Answer Part 1
 
-//Part 2
+// Part 2
 
-// let iD1
+mainLoop: for (let index = 0; index < likely_candidates.length; index++) {
+  const candidate_a = likely_candidates[index];
+  for (let candidate_b of likely_candidates.slice(index + 1)) {
+    let char_differ_counter = 0;
+    let char_differ_index = 0;
+    for (let char_index = 0; char_index < candidate_a.length; char_index++) {
+      if (candidate_a[char_index] != candidate_b[char_index]) {
+        char_differ_counter += 1;
+        char_differ_index = char_index;
+      }
 
-// let iD2
+      if (char_differ_counter > 1) {
+        break;
+      }
+    }
 
-// let iD
-
-// let x
-
-// data.map(s=>{
-
-//     let status = 1
-
-//     for (let string of data) {
-
-//         let count=0
-
-//         let count2=0
-
-//         if (s===string) {
-
-//         }
-
-//         else if (status === 1) {
-
-//             for (let l=0; l<string.length;l++) {
-
-//                 if (s[l]===string[l]) {
-
-//                     count++
-
-//                 }
-
-//                 else {
-//                     count2++
-
-//                     x = l
-
-//                 }
-
-//                 if (count2>1) {
-//                     break
-//                 }
-
-//                 if (count===string.length-1 && count2===1) {
-
-//                     iD1=s;
-
-//                     iD2=string;
-
-//                     iD=s.slice(0,x)+s.slice(x+1)
-
-//                     status=0
-
-//                     break
-
-//                 }
-
-//             }
-
-//         }
-
-//         else {
-
-//             break
-//         }
-
-//     }
-// });
-
-// console.log(iD1);
-
-// console.log(iD2);
-
-// console.log(iD);
+    if (char_differ_counter === 1) {
+      const common_letters =
+        candidate_a.slice(0, char_differ_index) +
+        candidate_a.slice(char_differ_index + 1);
+      console.log(
+        `The common letters between the two correct box IDs are: ${common_letters}`
+      ); // Answer Part 2
+      break mainLoop;
+    }
+  }
+}
