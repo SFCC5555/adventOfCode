@@ -1,61 +1,24 @@
-import {readFileSync} from "node:fs";
+// --- Day 2: Password Philosophy ---
 
-const lines = readFileSync("day2.txt",{encoding:"utf-8"});
+import { readFileSync } from "node:fs";
 
+const input = "day2Input.txt";
 
-let data = lines.split("\n");
-
-
-let data2 = data.map(i => {
-    
-    let j = i.replaceAll(" ","-");
-
-    let k = j.replaceAll(":","");
-
-    let l = k.split("-");
-
-    return l
-})
-
-console.log(data2);
+const passwordsDocument = readFileSync(input, { encoding: "utf-8" }).split(
+  "\n"
+);
 
 let validPasswords = 0;
 
-for (let p of data2) {
-    
-    let r = new RegExp(p[2],"g");
+passwordsDocument.forEach((passwordInfo) => {
+  const passwordInfoList = passwordInfo.replace(/-/, " ").replace(/:/, "").split(" ");
+  const [lowest, highest, letter, password] = passwordInfoList;
+  const reEx = new RegExp(letter, "g");
+  const matches = password.match(reEx);
+  const appearTimes = matches ? matches.length : 0;
+  if (appearTimes >= parseInt(lowest) && appearTimes <= parseInt(highest)) {
+    validPasswords += 1;
+  }
+});
 
-    let m = p[3].match(r);
-
-    if (m === null) {
-
-    }
-
-    else if (m.length >= parseInt(p[0]) && m.length <= parseInt(p[1])) {
-
-        validPasswords++;
-
-    }
-}
-
-console.log(validPasswords);
-
-//Part 2
-
-console.log("Part 2 *******************************");
-
-let validPasswords2 = 0;
-
-for (let s of data2) {
-
-    if (s[2]===s[3][parseInt(s[0]-1)] && s[2]===s[3][parseInt(s[1]-1)]) {
-
-    }
-
-    else if (s[2]===s[3][parseInt(s[0]-1)] || s[2]===s[3][parseInt(s[1]-1)]) {
-        validPasswords2++
-    }
-
-}
-
-console.log(validPasswords2);
+console.log(`There are ${validPasswords} valid passwords`); // Answer Part 1
