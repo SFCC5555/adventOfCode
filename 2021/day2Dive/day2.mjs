@@ -1,70 +1,54 @@
-import {readFileSync} from "node:fs";
+// --- Day 2: Dive! ---
 
-const lines = readFileSync("day2.txt", {encoding:"utf-8"});
+import { readFileSync } from "node:fs";
 
-console.log(lines);
+const input = "day2Input.txt";
 
-let data = lines.split("\n");
+const plannedCourse = readFileSync(input, { encoding: "utf-8" })
+  .split("\n")
+  .map((step) => step.split(" "));
 
-let data2 = data.map(command=> {
-    
-    let c = command.split(" ");
-    
-    return c;
-})
+const position = { horizontalPosition: 0, depth: 0 };
 
-console.log(data2);
+const stepsMechanism = {
+  forward: { direction: "horizontalPosition", sense: 1 },
+  up: { direction: "depth", sense: -1 },
+  down: { direction: "depth", sense: 1 },
+};
 
-let position = 0;
+plannedCourse.forEach(([stepDirection, stepValue]) => {
+  position[stepsMechanism[stepDirection].direction] +=
+    parseInt(stepValue) * stepsMechanism[stepDirection].sense;
+});
 
-let depth = 0;
-
-for (let command of data2) {
-    if (command[0]==="forward") {
-        position+=parseInt(command[1]);
-    }
-
-    else if (command[0]==="up") {
-        depth-= parseInt(command[1]);
-    }
-
-    else if (command[0]==="down") {
-        depth+= parseInt(command[1]);
-    }
-}
-
-console.log(position*depth)
+console.log(
+  `After following the planned course:\n Horizontal position: ${
+    position.horizontalPosition
+  }\n Depth: ${position.depth}\n Product: ${
+    position.horizontalPosition * position.depth
+  }`
+); // Answer Part 1
 
 //Part 2
 
-console.log("Part 2***************************");
+// console.log("Part 2***************************");
 
-let position2 = 0;
+// let position2 = 0;
 
-let depth2 = 0;
+// let depth2 = 0;
 
-let aim = 0;
+// let aim = 0;
 
-for (let command of data2) {
-    if (command[0]==="forward") {
-        
-        position2+=parseInt(command[1]);
+// for (let command of data2) {
+//   if (command[0] === "forward") {
+//     position2 += parseInt(command[1]);
 
-        depth2+=aim*parseInt(command[1]);
+//     depth2 += aim * parseInt(command[1]);
+//   } else if (command[0] === "up") {
+//     aim -= parseInt(command[1]);
+//   } else if (command[0] === "down") {
+//     aim += parseInt(command[1]);
+//   }
+// }
 
-
-    }
-
-    else if (command[0]==="up") {
-        aim-= parseInt(command[1]);
-    }
-
-    else if (command[0]==="down") {
-        aim+= parseInt(command[1]);
-    }
-}
-
-console.log(position2*depth2);
-
-
-
+// console.log(position2 * depth2);
