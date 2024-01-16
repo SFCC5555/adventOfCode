@@ -8,9 +8,9 @@ const plannedCourse = readFileSync(input, { encoding: "utf-8" })
   .split("\n")
   .map((step) => step.split(" "));
 
-const position = { horizontalPosition: 0, depth: 0 };
+let position = { horizontalPosition: 0, depth: 0 };
 
-const stepsMechanism = {
+let stepsMechanism = {
   forward: { direction: "horizontalPosition", sense: 1 },
   up: { direction: "depth", sense: -1 },
   down: { direction: "depth", sense: 1 },
@@ -31,24 +31,28 @@ console.log(
 
 //Part 2
 
-// console.log("Part 2***************************");
+position = { horizontalPosition: 0, depth: 0, aim: 0 };
 
-// let position2 = 0;
+stepsMechanism = {
+  forward: { direction: "horizontalPosition", sense: 1, depthFactor: 1 },
+  up: { direction: "aim", sense: -1, depthFactor: 0 },
+  down: { direction: "aim", sense: 1, depthFactor: 0 },
+};
 
-// let depth2 = 0;
+plannedCourse.forEach(([stepDirection, stepValue]) => {
+  position[stepsMechanism[stepDirection].direction] +=
+    parseInt(stepValue) * stepsMechanism[stepDirection].sense;
 
-// let aim = 0;
+  position.depth +=
+    position.aim *
+    parseInt(stepValue) *
+    stepsMechanism[stepDirection].depthFactor;
+});
 
-// for (let command of data2) {
-//   if (command[0] === "forward") {
-//     position2 += parseInt(command[1]);
-
-//     depth2 += aim * parseInt(command[1]);
-//   } else if (command[0] === "up") {
-//     aim -= parseInt(command[1]);
-//   } else if (command[0] === "down") {
-//     aim += parseInt(command[1]);
-//   }
-// }
-
-// console.log(position2 * depth2);
+console.log(
+  `After following the the new instructions:\n Horizontal position: ${
+    position.horizontalPosition
+  }\n Depth: ${position.depth}\n Product: ${
+    position.horizontalPosition * position.depth
+  }`
+); // Answer Part 2
