@@ -1,0 +1,29 @@
+// --- Day 2: Rock Paper Scissors ---
+
+import { readFileSync } from "node:fs";
+
+const input: string = "day2Input.txt";
+
+const strategyGuide: string[][] = readFileSync(input, { encoding: "utf-8" })
+  .split("\n")
+  .map((round) => round.split(" "));
+
+interface Points {
+  [key: string]: number;
+}
+
+const points: Record<string, Points> = {
+  X: { shape: 1, A: 3, B: 0, C: 6 },
+  Y: { shape: 2, A: 6, B: 3, C: 0 },
+  Z: { shape: 3, A: 0, B: 6, C: 3 },
+};
+
+const totalScore: number = strategyGuide.reduce(
+  (total: number, [opponentChoose, yourChoose]: string[]): number =>
+    total + points[yourChoose].shape + points[yourChoose][opponentChoose],
+  0
+);
+
+console.log(
+  `According to the strategy guide your total score is: ${totalScore}`
+); // Answer Part 1
