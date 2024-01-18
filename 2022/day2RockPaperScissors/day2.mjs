@@ -24,55 +24,22 @@ console.log(
   `According to the strategy guide your total score is: ${totalScore}`
 ); // Answer Part 1
 
-//Part 2
+// Part 2
 
-// let ultimateScore=0
+const actualPoints = {
+  X: { result: 0, A: 3, B: 1, C: 2 },
+  Y: { result: 3, A: 1, B: 2, C: 3 },
+  Z: { result: 6, A: 2, B: 3, C: 1 },
+};
 
-// for (let u of strategy) {
-//     if (u[0]=="A") {
-//         if (u[2]=="X") {
-//             score=3
-//             ultimateScore+=score
-//         }
-//         else if (u[2]=="Y") {
-//             score=4
-//             ultimateScore+=score
-//         }
-//         else if (u[2]=="Z") {
-//             score=8
-//             ultimateScore+=score
-//         }
-//     }
+const actualTotalScore = strategyGuide.reduce(
+  (total, [opponentChoose, roundResult]) =>
+    total +
+    actualPoints[roundResult].result +
+    actualPoints[roundResult][opponentChoose],
+  0
+);
 
-//     else if (u[0]=="B") {
-//         if (u[2]=="X") {
-//             score=1
-//             ultimateScore+=score
-//         }
-//         else if (u[2]=="Y") {
-//             score=5
-//             ultimateScore+=score
-//         }
-//         else if (u[2]=="Z") {
-//             score=9
-//             ultimateScore+=score
-//         }
-//     }
-
-//     else if (u[0]=="C") {
-//         if (u[2]=="X") {
-//             score=2
-//             ultimateScore+=score
-//         }
-//         else if (u[2]=="Y") {
-//             score=6
-//             ultimateScore+=score
-//         }
-//         else if (u[2]=="Z") {
-//             score=7
-//             ultimateScore+=score
-//         }
-//     }
-// }
-
-// console.log(ultimateScore)
+console.log(
+  `According to the actual strategy guide your total score is: ${actualTotalScore}`
+); // Answer Part 2

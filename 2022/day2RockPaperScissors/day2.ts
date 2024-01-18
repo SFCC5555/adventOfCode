@@ -27,3 +27,23 @@ const totalScore: number = strategyGuide.reduce(
 console.log(
   `According to the strategy guide your total score is: ${totalScore}`
 ); // Answer Part 1
+
+// Part 2
+
+const actualPoints: Record<string, Points> = {
+  X: { result: 0, A: 3, B: 1, C: 2 },
+  Y: { result: 3, A: 1, B: 2, C: 3 },
+  Z: { result: 6, A: 2, B: 3, C: 1 },
+};
+
+const actualTotalScore: number = strategyGuide.reduce(
+  (total: number, [opponentChoose, roundResult]: string[]): number =>
+    total +
+    actualPoints[roundResult].result +
+    actualPoints[roundResult][opponentChoose],
+  0
+);
+
+console.log(
+  `According to the actual strategy guide your total score is: ${actualTotalScore}`
+); // Answer Part 2
