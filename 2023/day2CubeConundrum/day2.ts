@@ -60,3 +60,26 @@ let sumPossibleGamesIds: number = recordInformation.reduce(
 );
 
 console.log(`The sum of the IDs of those games is: ${sumPossibleGamesIds}`); // Answer Part 1
+
+// Part 2
+
+const powersSum: number = recordInformation.reduce(
+  (total: number, game: Game): number =>
+    total +
+    Math.max(
+      ...game.rounds.map((round: Round): number => (round.red ? round.red : 0))
+    ) *
+      Math.max(
+        ...game.rounds.map((round: Round): number =>
+          round.green ? round.green : 0
+        )
+      ) *
+      Math.max(
+        ...game.rounds.map((round: Round): number =>
+          round.blue ? round.blue : 0
+        )
+      ),
+  0
+);
+
+console.log(`The sum of the power of these sets is: ${powersSum}`); // Answer Part 2
