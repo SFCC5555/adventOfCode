@@ -1,109 +1,34 @@
-import { hasSubscribers } from "node:diagnostics_channel";
+// --- Day 3: Perfectly Spherical Houses in a Vacuum ---
+
 import { readFileSync } from "node:fs";
 
-const lines = readFileSync("day3.txt", { encoding: "utf-8"})
+const input = "day3Input.txt";
 
-let data = lines.split("\n");
+const directions = readFileSync(input, { encoding: "utf-8" });
 
-console.log(lines)
+const directionsMechanism = {
+  "<": { axis: "x", value: -1 },
+  ">": { axis: "x", value: 1 },
+  "^": { axis: "y", value: 1 },
+  v: { axis: "y", value: -1 },
+};
 
-let coordinateX=0
-let coordinateY=0
+const coordinates = { x: 0, y: 0 };
 
-let coordinateXR=0
-let coordinateYR=0
+const housesVisited = { "0,0": 1 };
 
-let coordinates=[coordinateX,coordinateY]
+for (let direction of directions) {
+  const { axis, value } = directionsMechanism[direction];
 
-let coordinatesR=[coordinateXR,coordinateYR]
+  coordinates[axis] += value;
 
-let houses=[[0,0]]
-
-let turnCounter=1
-
-for (let direction of lines) {
-    turnCounter++
-
-    if (turnCounter%2==0) {
-
-        if (direction=="^") {
-            coordinateY++
-        }
-    
-        else if (direction=="v") {
-            coordinateY--
-        }
-    
-        else if (direction==">") {
-            coordinateX++
-        }
-    
-        else if (direction=="<") {
-            coordinateX--
-        }
-    
-        coordinates=[coordinateX,coordinateY]
-        console.log(coordinates)
-    
-        let counter=0
-        
-        for (let house of houses) {
-            if (coordinates[0]==house[0] && coordinates[1]==house[1]) {
-                break
-            }
-    
-            else {
-                counter++
-            }
-    
-            if (counter==houses.length) {
-                houses.push(coordinates)
-            }
-        }
-
-    }
-
-    else {
-        if (direction=="^") {
-            coordinateYR++
-        }
-    
-        else if (direction=="v") {
-            coordinateYR--
-        }
-    
-        else if (direction==">") {
-            coordinateXR++
-        }
-    
-        else if (direction=="<") {
-            coordinateXR--
-        }
-    
-        coordinatesR=[coordinateXR,coordinateYR]
-    
-        let counterR=0
-        
-        for (let house of houses) {
-            if (coordinatesR[0]==house[0] && coordinatesR[1]==house[1]) {
-                break
-            }
-    
-            else {
-                counterR++
-            }
-    
-            if (counterR==houses.length) {
-                houses.push(coordinatesR)
-            }
-        }
-
-    }
-
+  const currentPosition = `${coordinates.x},${coordinates.y}`;
+  housesVisited[currentPosition] = housesVisited[currentPosition]
+    ? housesVisited[currentPosition] + 1
+    : 1;
 }
 
-console.log(houses)
-
-console.log(houses.length)
-
-
+const numHousesWithPresents = Object.keys(housesVisited).length;
+console.log(
+  `The number of houses that receive at least one present is: ${numHousesWithPresents}`
+); // Answer Part 1
