@@ -1,18 +1,27 @@
-const input = 265149;
+const input: number = 265149;
 
-const coordinates = { x: 0, y: 0 };
+interface Coordinates {
+  x: number;
+  y: number;
+}
 
-const grid = { 1: { x: 0, y: 0 } };
+interface Grid {
+  [key: number]: Coordinates;
+}
 
-let changeInterval = 1;
+const coordinates: Coordinates = { x: 0, y: 0 };
 
-let axis = "x";
+const grid: Grid = { 1: { x: 0, y: 0 } };
 
-let direction = 1;
+let changeInterval: number = 1;
 
-let changeAxisCounter = 0;
+let axis: "x" | "y" = "x";
 
-let changeDirectionCounter = 0;
+let direction: 1 | -1 = 1;
+
+let changeAxisCounter: number = 0;
+
+let changeDirectionCounter: number = 0;
 
 for (let square = 2; square <= input; square++) {
   coordinates[axis] += direction;
@@ -32,6 +41,6 @@ for (let square = 2; square <= input; square++) {
   }
 }
 
-const steps = Math.abs(grid[input].x) + Math.abs(grid[input].y);
+const steps: number = Math.abs(grid[input].x) + Math.abs(grid[input].y);
 
 console.log(`The steps required are: ${steps}`); // Answer Part 1
